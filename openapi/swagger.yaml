@@ -1,0 +1,455 @@
+openapi: 3.0.0
+info:
+  title: Battery Data API
+  description: A standard API for accessing battery experiment datasets and metadata
+  contact:
+    email: martin.robinson@cs.ox.ac.uk
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
+  description: Battery Data API
+security:
+- bearerAuth: []
+tags:
+- name: harvesters
+  description: Operations available to harvester users (uploading new datasets)
+- name: users
+  description: Operations available to regular users (reading datasets and updating
+    metadata)
+paths:
+  /dataset:
+    get:
+      tags:
+      - users
+      summary: gets information on all datasets
+      description: |
+        Returns metadata on all the datasets.
+      operationId: getDatasets
+      responses:
+        "200":
+          description: an array of all dataset items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dataset'
+          links:
+            getColumn:
+              $ref: '#/components/links/columnLink'
+            getCell:
+              $ref: '#/components/links/cellLink'
+            getOwner:
+              $ref: '#/components/links/ownerLink'
+            getTestEquipment:
+              $ref: '#/components/links/testEquipmentLink'
+        "401":
+          description: Access token is missing or invalid
+  /dataset/{id}:
+    get:
+      tags:
+      - users
+      summary: get information on a single dataset
+      description: |
+        Returns metadata on all the dataset corresponding to the given id.
+      operationId: getDataset
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the resource to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: dataset item with given id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+          links:
+            getColumn:
+              $ref: '#/components/links/columnLink'
+            getCell:
+              $ref: '#/components/links/cellLink'
+            getOwner:
+              $ref: '#/components/links/ownerLink'
+            getTestEquipment:
+              $ref: '#/components/links/testEquipmentLink'
+        "401":
+          description: Access token is missing or invalid
+  /dataset/{id}/{column_id}:
+    get:
+      tags:
+      - users
+      summary: gets a single column of data from a dataset
+      description: |
+        Returns a column of a dataset as a binary blob.
+      operationId: getColumn
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the resource to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - name: column_id
+        in: path
+        description: Numeric ID of the column to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - name: precision
+        in: query
+        description: |
+          Whether to format the response as a single (32-bit) or double (64-bit) array
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          default: single
+          enum:
+          - single
+          - double
+      responses:
+        "200":
+          description: |
+            A single column of a dataset as a byte array of 32-bit or 64-bit floats.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "401":
+          description: Access token is missing or invalid
+  /cell:
+    get:
+      tags:
+      - users
+      summary: gets information on all cells
+      description: |
+        Returns information on all cells.
+      operationId: getCells
+      responses:
+        "200":
+          description: an array of cell items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cell'
+        "401":
+          description: Access token is missing or invalid
+  /cell/{id}:
+    get:
+      tags:
+      - users
+      summary: get information on a single cell
+      description: |
+        Returns information on a cell with the given id.
+      operationId: getCell
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the resource to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: dataset metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cell'
+        "401":
+          description: Access token is missing or invalid
+  /user:
+    get:
+      tags:
+      - users
+      summary: gets information on all users
+      description: |
+        Returns information on all users.
+      operationId: getUsers
+      responses:
+        "200":
+          description: an array of user items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "401":
+          description: Access token is missing or invalid
+  /user/{id}:
+    get:
+      tags:
+      - users
+      summary: get information on a single user
+      description: |
+        Returns information on a user with the given id.
+      operationId: getUser
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the resource to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: user info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          description: Access token is missing or invalid
+  /test_equipment:
+    get:
+      tags:
+      - users
+      summary: gets information on all recorded test equipment
+      description: |
+        Returns information on all test equipment.
+      operationId: getTestEquipments
+      responses:
+        "200":
+          description: an array of test equipment items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestEquipment'
+        "401":
+          description: Access token is missing or invalid
+  /test_equipment/{id}:
+    get:
+      tags:
+      - users
+      summary: get information on a single item of test equipment
+      description: |
+        Returns information on the test equipment with the given id.
+      operationId: getTestEquipment
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the resource to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: test equipment info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestEquipment'
+        "401":
+          description: Access token is missing or invalid
+components:
+  schemas:
+    Error:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Dataset:
+      required:
+      - column_ids
+      - date
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: My Name Here - 23
+        date:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+        column_ids:
+          type: array
+          items:
+            minimum: 0
+            type: integer
+        cell_id:
+          minimum: 0
+          type: integer
+          format: int64
+        owner_id:
+          minimum: 0
+          type: integer
+          format: int64
+        purpose:
+          type: string
+          example: Real world/drive cycling
+        test_equipment_ids:
+          type: array
+          items:
+            minimum: 0
+            type: integer
+        json_data:
+          type: object
+    Cell:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: My Name Here
+        manufacturer:
+          type: string
+          example: Biologic
+        form_factor:
+          type: string
+          example: what is a form factor?
+        datasheet:
+          type: string
+          format: url
+          example: http://link.to.datasheet/here.pdf
+        anode_chemistry:
+          type: string
+          example: example of anode chemistry here
+        cathode_chemistry:
+          type: string
+          example: example of cathode chemistry here
+        nominal_capacity:
+          type: number
+          description: in what units?
+          format: float
+        nominal_cell_weight:
+          type: number
+          description: in what units?
+          format: float
+    User:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: My Name Here
+        email:
+          type: string
+          format: email
+          example: name@domain.com
+        address:
+          type: string
+          format: address
+          example: "Department of Computer Science, University of Oxford, 15 Parks\
+            \ Rd, Oxford OX1 3QD, United Kingdom"
+    TestEquipment:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: My Name Here
+        description:
+          type: string
+          example: Biologic MPG205z
+  responses:
+    Unauthorized:
+      description: Access token is missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnauthorizedError:
+      description: Access token is missing or invalid
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    idParam:
+      name: id
+      in: path
+      description: Numeric ID of the resource to get
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  links:
+    columnLink:
+      operationId: getColumn
+      parameters:
+        id: $response.body#/id
+        column_id: "$response.body#/column_ids[0]"
+      description: "The `id` value combined with elements of the `column_ids` array\
+        \ returned in the response can be used as the `id` and `column_id` parameters\
+        \ respectivly in `GET /dataset/{id}/{column_id}`.\n"
+    cellLink:
+      operationId: getCell
+      parameters:
+        id: $response.body#/cell_id
+      description: "The `cell_id` value returned in the response can be used as the\
+        \ `id` parameter in `GET /cell/{id}`.\n"
+    ownerLink:
+      operationId: getCell
+      parameters:
+        id: $response.body#/owner_id
+      description: "The `owner_id` value returned in the response can be used as the\
+        \ `id` parameter in `GET /user/{id}`.\n"
+    testEquipmentLink:
+      operationId: getTestEquipment
+      parameters:
+        id: "$response.body#/test_equipment_ids[0]"
+      description: "Elements of the `test_equipment_ids` array returned in the response\
+        \ can be used as the `id` parameter in `GET /test_equipment/{id}`.\n"
