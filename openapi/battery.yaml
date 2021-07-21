@@ -267,6 +267,7 @@ paths:
                 $ref: '#/components/schemas/Equipment'
         "401":
           description: Access token is missing or invalid
+
 components:
   schemas:
     Error:
@@ -299,6 +300,7 @@ components:
           format: date-time
           example: 2016-08-29T09:12:33.001Z
         purpose:
+          nullable: true
           type: string
           example: Real world/drive cycling
         columns:
@@ -319,11 +321,11 @@ components:
             $ref: '#/components/schemas/Range'
         json_data:
           type: object
+          nullable: true
     Range:
       required:
       - label_name
-      - lower_bound
-      - upper_bound
+      - sample_range
       type: object
       properties:
         id:
@@ -333,16 +335,18 @@ components:
         label_name:
           type: string
           example: CC_1
-        lower_bound:
-          minimum: 0
-          type: integer
-        upper_bound:
-          minimum: 1
-          type: integer
+        sample_range:
+          type: array
+          items:
+            type: integer
+            format: int64
+          example: [1, 2]
         info:
+          nullable: true
           type: string
           example: constant current until 5V
     Cell:
+      nullable: true
       required:
       - id
       - name
@@ -380,6 +384,7 @@ components:
           description: in what units?
           format: float
     User:
+      nullable: true
       required:
       - id
       - name
@@ -421,7 +426,6 @@ components:
       required:
       - id
       - name
-      - unit
       type: object
       properties:
         id:
@@ -433,6 +437,7 @@ components:
           example: Volts
         unit:
           type: string
+          nullable: true
           example: V
   responses:
     Unauthorized:
