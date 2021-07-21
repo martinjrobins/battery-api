@@ -44,8 +44,8 @@ paths:
               $ref: '#/components/links/cellLink'
             getOwner:
               $ref: '#/components/links/ownerLink'
-            getTestEquipment:
-              $ref: '#/components/links/testEquipmentLink'
+            getEquipment:
+              $ref: '#/components/links/equipmentLink'
         "401":
           description: Access token is missing or invalid
   /dataset/{id}:
@@ -79,8 +79,8 @@ paths:
               $ref: '#/components/links/cellLink'
             getOwner:
               $ref: '#/components/links/ownerLink'
-            getTestEquipment:
-              $ref: '#/components/links/testEquipmentLink'
+            getEquipment:
+              $ref: '#/components/links/equipmentLink'
         "401":
           description: Access token is missing or invalid
   /dataset/{id}/{column_id}:
@@ -222,14 +222,14 @@ paths:
                 $ref: '#/components/schemas/User'
         "401":
           description: Access token is missing or invalid
-  /test_equipment:
+  /equipment:
     get:
       tags:
       - users
       summary: gets information on all recorded test equipment
       description: |
         Returns information on all test equipment.
-      operationId: getTestEquipments
+      operationId: getEquipments
       responses:
         "200":
           description: an array of test equipment items
@@ -238,17 +238,17 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TestEquipment'
+                  $ref: '#/components/schemas/Equipment'
         "401":
           description: Access token is missing or invalid
-  /test_equipment/{id}:
+  /equipment/{id}:
     get:
       tags:
       - users
       summary: get information on a single item of test equipment
       description: |
         Returns information on the test equipment with the given id.
-      operationId: getTestEquipment
+      operationId: getEquipment
       parameters:
       - name: id
         in: path
@@ -264,9 +264,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TestEquipment'
+                $ref: '#/components/schemas/Equipment'
         "401":
           description: Access token is missing or invalid
+
 components:
   schemas:
     Error:
@@ -298,30 +299,54 @@ components:
           type: string
           format: date-time
           example: 2016-08-29T09:12:33.001Z
-        column_ids:
-          type: array
-          items:
-            minimum: 0
-            type: integer
-        cell_id:
-          minimum: 0
-          type: integer
-          format: int64
-        owner_id:
-          minimum: 0
-          type: integer
-          format: int64
         purpose:
+          nullable: true
           type: string
           example: Real world/drive cycling
-        test_equipment_ids:
+        columns:
           type: array
           items:
-            minimum: 0
-            type: integer
+            $ref: '#/components/schemas/Column'
+        cell:
+          $ref: '#/components/schemas/Cell'
+        owner:
+          $ref: '#/components/schemas/User'
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Range'
         json_data:
           type: object
+          nullable: true
+    Range:
+      required:
+      - label_name
+      - sample_range
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        label_name:
+          type: string
+          example: CC_1
+        sample_range:
+          type: array
+          items:
+            type: integer
+            format: int64
+          example: [1, 2]
+        info:
+          nullable: true
+          type: string
+          example: constant current until 5V
     Cell:
+      nullable: true
       required:
       - id
       - name
@@ -359,6 +384,7 @@ components:
           description: in what units?
           format: float
     User:
+      nullable: true
       required:
       - id
       - name
@@ -380,7 +406,7 @@ components:
           format: address
           example: "Department of Computer Science, University of Oxford, 15 Parks\
             \ Rd, Oxford OX1 3QD, United Kingdom"
-    TestEquipment:
+    Equipment:
       required:
       - id
       - name
@@ -396,6 +422,23 @@ components:
         description:
           type: string
           example: Biologic MPG205z
+    Column:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: Volts
+        unit:
+          type: string
+          nullable: true
+          example: V
   responses:
     Unauthorized:
       description: Access token is missing or invalid
@@ -447,9 +490,9 @@ components:
         id: $response.body#/owner_id
       description: "The `owner_id` value returned in the response can be used as the\
         \ `id` parameter in `GET /user/{id}`.\n"
-    testEquipmentLink:
-      operationId: getTestEquipment
+    equipmentLink:
+      operationId: getEquipment
       parameters:
-        id: "$response.body#/test_equipment_ids[0]"
-      description: "Elements of the `test_equipment_ids` array returned in the response\
-        \ can be used as the `id` parameter in `GET /test_equipment/{id}`.\n"
+        id: "$response.body#/equipment_ids[0]"
+      description: "Elements of the `equipment_ids` array returned in the response\
+        \ can be used as the `id` parameter in `GET /equipment/{id}`.\n"

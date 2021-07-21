@@ -1,0 +1,586 @@
+openapi: 3.0.0
+info:
+  title: Battery Data API
+  description: A standard API for accessing battery experiment datasets and metadata
+  contact:
+    email: martin.robinson@cs.ox.ac.uk
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
+  description: Battery Data API
+security:
+- bearerAuth: []
+tags:
+- name: harvesters
+  description: Operations available to harvester users (uploading new datasets)
+- name: users
+  description: Operations available to regular users (reading datasets and updating
+    metadata)
+paths:
+  /dataset:
+    get:
+      tags:
+      - users
+      summary: gets information on all datasets
+      description: |
+        Returns metadata on all the datasets.
+      operationId: get_datasets
+      responses:
+        "200":
+          description: an array of all dataset items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dataset'
+                x-content-type: application/json
+          links:
+            getColumn:
+              $ref: '#/components/links/columnLink'
+            getCell:
+              $ref: '#/components/links/cellLink'
+            getOwner:
+              $ref: '#/components/links/ownerLink'
+            getEquipment:
+              $ref: '#/components/links/equipmentLink'
+        "401":
+          description: Access token is missing or invalid
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /dataset/{id}:
+    get:
+      tags:
+      - users
+      summary: get information on a single dataset
+      description: |
+        Returns metadata on all the dataset corresponding to the given id.
+      operationId: get_dataset
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the resource to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: dataset item with given id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+          links:
+            getColumn:
+              $ref: '#/components/links/columnLink'
+            getCell:
+              $ref: '#/components/links/cellLink'
+            getOwner:
+              $ref: '#/components/links/ownerLink'
+            getEquipment:
+              $ref: '#/components/links/equipmentLink'
+        "401":
+          description: Access token is missing or invalid
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /dataset/{id}/{column_id}:
+    get:
+      tags:
+      - users
+      summary: gets a single column of data from a dataset
+      description: |
+        Returns a column of a dataset as a binary blob.
+      operationId: get_column
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the resource to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - name: column_id
+        in: path
+        description: Numeric ID of the column to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - name: precision
+        in: query
+        description: |
+          Whether to format the response as a single (32-bit) or double (64-bit) array
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          default: single
+          enum:
+          - single
+          - double
+      responses:
+        "200":
+          description: |
+            A single column of a dataset as a byte array of 32-bit or 64-bit floats.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+                x-content-type: application/octet-stream
+        "401":
+          description: Access token is missing or invalid
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /cell:
+    get:
+      tags:
+      - users
+      summary: gets information on all cells
+      description: |
+        Returns information on all cells.
+      operationId: get_cells
+      responses:
+        "200":
+          description: an array of cell items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cell'
+                x-content-type: application/json
+        "401":
+          description: Access token is missing or invalid
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /cell/{id}:
+    get:
+      tags:
+      - users
+      summary: get information on a single cell
+      description: |
+        Returns information on a cell with the given id.
+      operationId: get_cell
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the resource to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: dataset metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cell'
+        "401":
+          description: Access token is missing or invalid
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /user:
+    get:
+      tags:
+      - users
+      summary: gets information on all users
+      description: |
+        Returns information on all users.
+      operationId: get_users
+      responses:
+        "200":
+          description: an array of user items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                x-content-type: application/json
+        "401":
+          description: Access token is missing or invalid
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /user/{id}:
+    get:
+      tags:
+      - users
+      summary: get information on a single user
+      description: |
+        Returns information on a user with the given id.
+      operationId: get_user
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the resource to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: user info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          description: Access token is missing or invalid
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /equipment:
+    get:
+      tags:
+      - users
+      summary: gets information on all recorded test equipment
+      description: |
+        Returns information on all test equipment.
+      operationId: get_equipments
+      responses:
+        "200":
+          description: an array of test equipment items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Equipment'
+                x-content-type: application/json
+        "401":
+          description: Access token is missing or invalid
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+  /equipment/{id}:
+    get:
+      tags:
+      - users
+      summary: get information on a single item of test equipment
+      description: |
+        Returns information on the test equipment with the given id.
+      operationId: get_equipment
+      parameters:
+      - name: id
+        in: path
+        description: Numeric ID of the resource to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: test equipment info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+        "401":
+          description: Access token is missing or invalid
+      x-openapi-router-controller: swagger_server.controllers.users_controller
+components:
+  schemas:
+    Error:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Dataset:
+      required:
+      - column_ids
+      - date
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: My Name Here - 23
+        date:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+        purpose:
+          type: string
+          example: Real world/drive cycling
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Column'
+        cell:
+          $ref: '#/components/schemas/Cell'
+        owner:
+          $ref: '#/components/schemas/User'
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Range'
+        json_data:
+          type: object
+      example:
+        date: 2016-08-29T09:12:33.001Z
+        owner:
+          address: "Department of Computer Science, University of Oxford, 15 Parks\
+            \ Rd, Oxford OX1 3QD, United Kingdom"
+          name: My Name Here
+          id: 0
+          email: name@domain.com
+        ranges:
+        - lower_bound: 0
+          id: 0
+          upper_bound: 1
+          label_name: CC_1
+          info: constant current until 5V
+        - lower_bound: 0
+          id: 0
+          upper_bound: 1
+          label_name: CC_1
+          info: constant current until 5V
+        purpose: Real world/drive cycling
+        columns:
+        - unit: V
+          name: Volts
+          id: 0
+        - unit: V
+          name: Volts
+          id: 0
+        name: My Name Here - 23
+        equipment:
+        - name: My Name Here
+          description: Biologic MPG205z
+          id: 0
+        - name: My Name Here
+          description: Biologic MPG205z
+          id: 0
+        id: 0
+        cell:
+          nominal_capacity: 5.962134
+          cathode_chemistry: example of cathode chemistry here
+          name: My Name Here
+          id: 0
+          anode_chemistry: example of anode chemistry here
+          form_factor: what is a form factor?
+          datasheet: http://link.to.datasheet/here.pdf
+          nominal_cell_weight: 5.637377
+          manufacturer: Biologic
+        json_data: {}
+    Range:
+      required:
+      - label_name
+      - lower_bound
+      - upper_bound
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        label_name:
+          type: string
+          example: CC_1
+        lower_bound:
+          minimum: 0
+          type: integer
+        upper_bound:
+          minimum: 1
+          type: integer
+        info:
+          type: string
+          example: constant current until 5V
+      example:
+        lower_bound: 0
+        id: 0
+        upper_bound: 1
+        label_name: CC_1
+        info: constant current until 5V
+    Cell:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: My Name Here
+        manufacturer:
+          type: string
+          example: Biologic
+        form_factor:
+          type: string
+          example: what is a form factor?
+        datasheet:
+          type: string
+          format: url
+          example: http://link.to.datasheet/here.pdf
+        anode_chemistry:
+          type: string
+          example: example of anode chemistry here
+        cathode_chemistry:
+          type: string
+          example: example of cathode chemistry here
+        nominal_capacity:
+          type: number
+          description: in what units?
+          format: float
+        nominal_cell_weight:
+          type: number
+          description: in what units?
+          format: float
+      example:
+        nominal_capacity: 5.962134
+        cathode_chemistry: example of cathode chemistry here
+        name: My Name Here
+        id: 0
+        anode_chemistry: example of anode chemistry here
+        form_factor: what is a form factor?
+        datasheet: http://link.to.datasheet/here.pdf
+        nominal_cell_weight: 5.637377
+        manufacturer: Biologic
+    User:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: My Name Here
+        email:
+          type: string
+          format: email
+          example: name@domain.com
+        address:
+          type: string
+          format: address
+          example: "Department of Computer Science, University of Oxford, 15 Parks\
+            \ Rd, Oxford OX1 3QD, United Kingdom"
+      example:
+        address: "Department of Computer Science, University of Oxford, 15 Parks Rd,\
+          \ Oxford OX1 3QD, United Kingdom"
+        name: My Name Here
+        id: 0
+        email: name@domain.com
+    Equipment:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: My Name Here
+        description:
+          type: string
+          example: Biologic MPG205z
+      example:
+        name: My Name Here
+        description: Biologic MPG205z
+        id: 0
+    Column:
+      required:
+      - id
+      - name
+      - unit
+      type: object
+      properties:
+        id:
+          minimum: 0
+          type: integer
+          format: int64
+        name:
+          type: string
+          example: Volts
+        unit:
+          type: string
+          example: V
+      example:
+        unit: V
+        name: Volts
+        id: 0
+  responses:
+    Unauthorized:
+      description: Access token is missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnauthorizedError:
+      description: Access token is missing or invalid
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    idParam:
+      name: id
+      in: path
+      description: Numeric ID of the resource to get
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_bearerAuth
+  links:
+    columnLink:
+      operationId: getColumn
+      parameters:
+        id: $response.body#/id
+        column_id: "$response.body#/column_ids[0]"
+      description: "The `id` value combined with elements of the `column_ids` array\
+        \ returned in the response can be used as the `id` and `column_id` parameters\
+        \ respectivly in `GET /dataset/{id}/{column_id}`.\n"
+    cellLink:
+      operationId: getCell
+      parameters:
+        id: $response.body#/cell_id
+      description: "The `cell_id` value returned in the response can be used as the\
+        \ `id` parameter in `GET /cell/{id}`.\n"
+    ownerLink:
+      operationId: getCell
+      parameters:
+        id: $response.body#/owner_id
+      description: "The `owner_id` value returned in the response can be used as the\
+        \ `id` parameter in `GET /user/{id}`.\n"
+    equipmentLink:
+      operationId: getEquipment
+      parameters:
+        id: "$response.body#/equipment_ids[0]"
+      description: "Elements of the `equipment_ids` array returned in the response\
+        \ can be used as the `id` parameter in `GET /equipment/{id}`.\n"
+
