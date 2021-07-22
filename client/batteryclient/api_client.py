@@ -21,10 +21,10 @@ from urllib.parse import quote
 from urllib3.fields import RequestField
 
 
-from openapi_client import rest
-from openapi_client.configuration import Configuration
-from openapi_client.exceptions import ApiTypeError, ApiValueError, ApiException
-from openapi_client.model_utils import (
+from batteryclient import rest
+from batteryclient.configuration import Configuration
+from batteryclient.exceptions import ApiTypeError, ApiValueError, ApiException
+from batteryclient.model_utils import (
     ModelNormal,
     ModelSimple,
     ModelComposed,

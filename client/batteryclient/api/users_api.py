@@ -12,8 +12,8 @@
 import re  # noqa: F401
 import sys  # noqa: F401
 
-from openapi_client.api_client import ApiClient, Endpoint as _Endpoint
-from openapi_client.model_utils import (  # noqa: F401
+from batteryclient.api_client import ApiClient, Endpoint as _Endpoint
+from batteryclient.model_utils import (  # noqa: F401
     check_allowed_values,
     check_validations,
     date,
@@ -22,10 +22,10 @@ from openapi_client.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
-from openapi_client.model.cell import Cell
-from openapi_client.model.dataset import Dataset
-from openapi_client.model.equipment import Equipment
-from openapi_client.model.user import User
+from batteryclient.model.cell import Cell
+from batteryclient.model.dataset import Dataset
+from batteryclient.model.equipment import Equipment
+from batteryclient.model.user import User
 
 
 class UsersApi(object):

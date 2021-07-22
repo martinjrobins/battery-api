@@ -1,0 +1,5 @@
+inputSpec: openapi/battery.yaml
+outputDir: client
+generatorName: python
+packageName: batteryclient
+projectName: batteryclient

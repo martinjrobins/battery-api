@@ -4,11 +4,9 @@ from openapi_client.login import login
 from pprint import pprint
 import numpy as np
 
-token = login(
-    host="http://localhost:5001/api",
-    username='bob',
-    password='bob',
-)
+
+token = \
+'''eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyNjk0MzUxOSwianRpIjoiOTE1ZDVjNzUtNmRlMS00MjI5LTk2NGEtYTg4Yzc2ZmJhOGI5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcImlkXCI6IDEsIFwidXNlcm5hbWVcIjogXCJib2JcIiwgXCJlbWFpbFwiOiBcImJvYkBnbWFpbC5jb21cIn0iLCJuYmYiOjE2MjY5NDM1MTksImNzcmYiOiI0NmQ0NzljNC1hMTA2LTQzZmItYTNkNi1hNjZiNzg3NjdkZTkiLCJleHAiOjE2MjY5NDcxMTl9.qLLq-6q4Nf9pWBME_AD50H4QkGnJEaNtlj4M4YUdxHw'''
 
 configuration = openapi_client.Configuration(
     host="http://localhost:5001/api",
