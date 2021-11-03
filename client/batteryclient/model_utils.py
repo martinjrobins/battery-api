@@ -64,7 +64,7 @@ class cached_property(object):
             return result
 
 
-PRIMITIVE_TYPES = (list, float, int, bool, datetime, date, str, file_type)
+PRIMITIVE_TYPES = (list, dict, float, int, bool, datetime, date, str, file_type)
 
 def allows_single_value_input(cls):
     """

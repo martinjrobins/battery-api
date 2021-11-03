@@ -387,14 +387,14 @@ components:
       nullable: true
       required:
       - id
-      - name
+      - username
       type: object
       properties:
         id:
           minimum: 0
           type: integer
           format: int64
-        name:
+        username:
           type: string
           example: My Name Here
         email:

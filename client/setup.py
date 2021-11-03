@@ -12,7 +12,7 @@
 from setuptools import setup, find_packages  # noqa: H301
 
 NAME = "batteryclient"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 # To install the library, run the following
 #
 # python setup.py install
@@ -31,6 +31,7 @@ setup(
     description="Battery Data API",
     author="OpenAPI Generator community",
     author_email="martin.robinson@cs.ox.ac.uk",
+    url="",
     keywords=["OpenAPI", "OpenAPI-Generator", "Battery Data API"],
     python_requires=">=3.6",
     install_requires=REQUIRES,
