@@ -1,1 +1,2 @@
-python -m twine upload --repository testpypi client/*
+python -m build
+python -m twine upload dist/*
