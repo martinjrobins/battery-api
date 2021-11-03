@@ -19,7 +19,7 @@ import tempfile
 
 from dateutil.parser import parse
 
-from openapi_client.exceptions import (
+from batteryclient.exceptions import (
     ApiKeyError,
     ApiAttributeError,
     ApiTypeError,
@@ -1339,7 +1339,6 @@ def deserialize_model(model_data, model_class, path_to_item, check_type,
                    _configuration=configuration,
                    _spec_property_naming=spec_property_naming)
 
-    print(model_data)
     if issubclass(model_class, ModelSimple):
         return model_class._new_from_openapi_data(model_data, **kw_args)
     elif isinstance(model_data, list):

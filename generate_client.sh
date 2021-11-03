@@ -1,1 +1,1 @@
-npx @openapitools/openapi-generator-cli generate -i openapi/battery.yaml -g python -o client
+npx @openapitools/openapi-generator-cli batch -v client.yaml

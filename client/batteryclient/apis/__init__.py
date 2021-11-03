@@ -14,4 +14,4 @@
 #   sys.setrecursionlimit(n)
 
 # Import APIs into API package:
-from openapi_client.api.users_api import UsersApi
+from batteryclient.api.users_api import UsersApi

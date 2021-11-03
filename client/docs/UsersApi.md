@@ -1,4 +1,4 @@
-# openapi_client.UsersApi
+# batteryclient.UsersApi
 
 All URIs are relative to *https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0*
 
@@ -27,13 +27,13 @@ Returns information on a cell with the given id.
 * Bearer (JWT) Authentication (bearerAuth):
 ```python
 import time
-import openapi_client
-from openapi_client.api import users_api
-from openapi_client.model.cell import Cell
+import batteryclient
+from batteryclient.api import users_api
+from batteryclient.model.cell import Cell
 from pprint import pprint
 # Defining the host is optional and defaults to https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     host = "https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0"
 )
 
@@ -43,12 +43,12 @@ configuration = openapi_client.Configuration(
 # satisfies your auth use case.
 
 # Configure Bearer authorization (JWT): bearerAuth
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     access_token = 'YOUR_BEARER_TOKEN'
 )
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with batteryclient.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     id = 1 # int | Numeric ID of the resource to get
@@ -58,7 +58,7 @@ with openapi_client.ApiClient(configuration) as api_client:
         # get information on a single cell
         api_response = api_instance.get_cell(id)
         pprint(api_response)
-    except openapi_client.ApiException as e:
+    except batteryclient.ApiException as e:
         print("Exception when calling UsersApi->get_cell: %s\n" % e)
 ```
 
@@ -103,13 +103,13 @@ Returns information on all cells.
 * Bearer (JWT) Authentication (bearerAuth):
 ```python
 import time
-import openapi_client
-from openapi_client.api import users_api
-from openapi_client.model.cell import Cell
+import batteryclient
+from batteryclient.api import users_api
+from batteryclient.model.cell import Cell
 from pprint import pprint
 # Defining the host is optional and defaults to https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     host = "https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0"
 )
 
@@ -119,12 +119,12 @@ configuration = openapi_client.Configuration(
 # satisfies your auth use case.
 
 # Configure Bearer authorization (JWT): bearerAuth
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     access_token = 'YOUR_BEARER_TOKEN'
 )
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with batteryclient.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
 
@@ -133,7 +133,7 @@ with openapi_client.ApiClient(configuration) as api_client:
         # gets information on all cells
         api_response = api_instance.get_cells()
         pprint(api_response)
-    except openapi_client.ApiException as e:
+    except batteryclient.ApiException as e:
         print("Exception when calling UsersApi->get_cells: %s\n" % e)
 ```
 
@@ -175,12 +175,12 @@ Returns a column of a dataset as a binary blob.
 * Bearer (JWT) Authentication (bearerAuth):
 ```python
 import time
-import openapi_client
-from openapi_client.api import users_api
+import batteryclient
+from batteryclient.api import users_api
 from pprint import pprint
 # Defining the host is optional and defaults to https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     host = "https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0"
 )
 
@@ -190,12 +190,12 @@ configuration = openapi_client.Configuration(
 # satisfies your auth use case.
 
 # Configure Bearer authorization (JWT): bearerAuth
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     access_token = 'YOUR_BEARER_TOKEN'
 )
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with batteryclient.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     id = 1 # int | Numeric ID of the resource to get
@@ -207,7 +207,7 @@ with openapi_client.ApiClient(configuration) as api_client:
         # gets a single column of data from a dataset
         api_response = api_instance.get_column(id, column_id)
         pprint(api_response)
-    except openapi_client.ApiException as e:
+    except batteryclient.ApiException as e:
         print("Exception when calling UsersApi->get_column: %s\n" % e)
 
     # example passing only required values which don't have defaults set
@@ -216,7 +216,7 @@ with openapi_client.ApiClient(configuration) as api_client:
         # gets a single column of data from a dataset
         api_response = api_instance.get_column(id, column_id, precision=precision)
         pprint(api_response)
-    except openapi_client.ApiException as e:
+    except batteryclient.ApiException as e:
         print("Exception when calling UsersApi->get_column: %s\n" % e)
 ```
 
@@ -263,13 +263,13 @@ Returns metadata on all the dataset corresponding to the given id.
 * Bearer (JWT) Authentication (bearerAuth):
 ```python
 import time
-import openapi_client
-from openapi_client.api import users_api
-from openapi_client.model.dataset import Dataset
+import batteryclient
+from batteryclient.api import users_api
+from batteryclient.model.dataset import Dataset
 from pprint import pprint
 # Defining the host is optional and defaults to https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     host = "https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0"
 )
 
@@ -279,12 +279,12 @@ configuration = openapi_client.Configuration(
 # satisfies your auth use case.
 
 # Configure Bearer authorization (JWT): bearerAuth
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     access_token = 'YOUR_BEARER_TOKEN'
 )
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with batteryclient.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     id = 1 # int | Numeric ID of the resource to get
@@ -294,7 +294,7 @@ with openapi_client.ApiClient(configuration) as api_client:
         # get information on a single dataset
         api_response = api_instance.get_dataset(id)
         pprint(api_response)
-    except openapi_client.ApiException as e:
+    except batteryclient.ApiException as e:
         print("Exception when calling UsersApi->get_dataset: %s\n" % e)
 ```
 
@@ -339,13 +339,13 @@ Returns metadata on all the datasets.
 * Bearer (JWT) Authentication (bearerAuth):
 ```python
 import time
-import openapi_client
-from openapi_client.api import users_api
-from openapi_client.model.dataset import Dataset
+import batteryclient
+from batteryclient.api import users_api
+from batteryclient.model.dataset import Dataset
 from pprint import pprint
 # Defining the host is optional and defaults to https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     host = "https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0"
 )
 
@@ -355,12 +355,12 @@ configuration = openapi_client.Configuration(
 # satisfies your auth use case.
 
 # Configure Bearer authorization (JWT): bearerAuth
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     access_token = 'YOUR_BEARER_TOKEN'
 )
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with batteryclient.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
 
@@ -369,7 +369,7 @@ with openapi_client.ApiClient(configuration) as api_client:
         # gets information on all datasets
         api_response = api_instance.get_datasets()
         pprint(api_response)
-    except openapi_client.ApiException as e:
+    except batteryclient.ApiException as e:
         print("Exception when calling UsersApi->get_datasets: %s\n" % e)
 ```
 
@@ -411,13 +411,13 @@ Returns information on the test equipment with the given id.
 * Bearer (JWT) Authentication (bearerAuth):
 ```python
 import time
-import openapi_client
-from openapi_client.api import users_api
-from openapi_client.model.equipment import Equipment
+import batteryclient
+from batteryclient.api import users_api
+from batteryclient.model.equipment import Equipment
 from pprint import pprint
 # Defining the host is optional and defaults to https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     host = "https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0"
 )
 
@@ -427,12 +427,12 @@ configuration = openapi_client.Configuration(
 # satisfies your auth use case.
 
 # Configure Bearer authorization (JWT): bearerAuth
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     access_token = 'YOUR_BEARER_TOKEN'
 )
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with batteryclient.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     id = 1 # int | Numeric ID of the resource to get
@@ -442,7 +442,7 @@ with openapi_client.ApiClient(configuration) as api_client:
         # get information on a single item of test equipment
         api_response = api_instance.get_equipment(id)
         pprint(api_response)
-    except openapi_client.ApiException as e:
+    except batteryclient.ApiException as e:
         print("Exception when calling UsersApi->get_equipment: %s\n" % e)
 ```
 
@@ -487,13 +487,13 @@ Returns information on all test equipment.
 * Bearer (JWT) Authentication (bearerAuth):
 ```python
 import time
-import openapi_client
-from openapi_client.api import users_api
-from openapi_client.model.equipment import Equipment
+import batteryclient
+from batteryclient.api import users_api
+from batteryclient.model.equipment import Equipment
 from pprint import pprint
 # Defining the host is optional and defaults to https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     host = "https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0"
 )
 
@@ -503,12 +503,12 @@ configuration = openapi_client.Configuration(
 # satisfies your auth use case.
 
 # Configure Bearer authorization (JWT): bearerAuth
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     access_token = 'YOUR_BEARER_TOKEN'
 )
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with batteryclient.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
 
@@ -517,7 +517,7 @@ with openapi_client.ApiClient(configuration) as api_client:
         # gets information on all recorded test equipment
         api_response = api_instance.get_equipments()
         pprint(api_response)
-    except openapi_client.ApiException as e:
+    except batteryclient.ApiException as e:
         print("Exception when calling UsersApi->get_equipments: %s\n" % e)
 ```
 
@@ -559,13 +559,13 @@ Returns information on a user with the given id.
 * Bearer (JWT) Authentication (bearerAuth):
 ```python
 import time
-import openapi_client
-from openapi_client.api import users_api
-from openapi_client.model.user import User
+import batteryclient
+from batteryclient.api import users_api
+from batteryclient.model.user import User
 from pprint import pprint
 # Defining the host is optional and defaults to https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     host = "https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0"
 )
 
@@ -575,12 +575,12 @@ configuration = openapi_client.Configuration(
 # satisfies your auth use case.
 
 # Configure Bearer authorization (JWT): bearerAuth
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     access_token = 'YOUR_BEARER_TOKEN'
 )
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with batteryclient.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     id = 1 # int | Numeric ID of the resource to get
@@ -590,7 +590,7 @@ with openapi_client.ApiClient(configuration) as api_client:
         # get information on a single user
         api_response = api_instance.get_user(id)
         pprint(api_response)
-    except openapi_client.ApiException as e:
+    except batteryclient.ApiException as e:
         print("Exception when calling UsersApi->get_user: %s\n" % e)
 ```
 
@@ -635,13 +635,13 @@ Returns information on all users.
 * Bearer (JWT) Authentication (bearerAuth):
 ```python
 import time
-import openapi_client
-from openapi_client.api import users_api
-from openapi_client.model.user import User
+import batteryclient
+from batteryclient.api import users_api
+from batteryclient.model.user import User
 from pprint import pprint
 # Defining the host is optional and defaults to https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     host = "https://virtserver.swaggerhub.com/martinjrobins/battery-api/1.0.0"
 )
 
@@ -651,12 +651,12 @@ configuration = openapi_client.Configuration(
 # satisfies your auth use case.
 
 # Configure Bearer authorization (JWT): bearerAuth
-configuration = openapi_client.Configuration(
+configuration = batteryclient.Configuration(
     access_token = 'YOUR_BEARER_TOKEN'
 )
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with batteryclient.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
 
@@ -665,7 +665,7 @@ with openapi_client.ApiClient(configuration) as api_client:
         # gets information on all users
         api_response = api_instance.get_users()
         pprint(api_response)
-    except openapi_client.ApiException as e:
+    except batteryclient.ApiException as e:
         print("Exception when calling UsersApi->get_users: %s\n" % e)
 ```
 
