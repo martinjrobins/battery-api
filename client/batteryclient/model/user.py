@@ -87,8 +87,8 @@ class User(ModelNormal):
         return {
             'id': (int,),  # noqa: E501
             'username': (str,),  # noqa: E501
-            'email': (str,),  # noqa: E501
-            'address': (str,),  # noqa: E501
+            'email': (str, none_type,),  # noqa: E501
+            'address': (str, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -148,8 +148,8 @@ class User(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            email (str): [optional]  # noqa: E501
-            address (str): [optional]  # noqa: E501
+            email (str, none_type): [optional]  # noqa: E501
+            address (str, none_type): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -237,8 +237,8 @@ class User(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            email (str): [optional]  # noqa: E501
-            address (str): [optional]  # noqa: E501
+            email (str, none_type): [optional]  # noqa: E501
+            address (str, none_type): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

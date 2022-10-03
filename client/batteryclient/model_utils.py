@@ -64,7 +64,7 @@ class cached_property(object):
             return result
 
 
-PRIMITIVE_TYPES = (list, dict, float, int, bool, datetime, date, str, file_type)
+PRIMITIVE_TYPES = (list, float, int, bool, datetime, date, str, file_type)
 
 def allows_single_value_input(cls):
     """
@@ -1629,6 +1629,9 @@ def model_to_dict(model_instance, serialize=True):
             attribute_map
     """
     result = {}
+
+    if isinstance(model_instance, dict):
+        return model_instance
 
     model_instances = [model_instance]
     if model_instance._composed_schemas:

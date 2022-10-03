@@ -362,27 +362,34 @@ components:
         manufacturer:
           type: string
           example: Biologic
+          nullable: true
         form_factor:
           type: string
           example: what is a form factor?
+          nullable: true
         datasheet:
           type: string
           format: url
           example: http://link.to.datasheet/here.pdf
+          nullable: true
         anode_chemistry:
           type: string
           example: example of anode chemistry here
+          nullable: true
         cathode_chemistry:
           type: string
           example: example of cathode chemistry here
+          nullable: true
         nominal_capacity:
           type: number
           description: in what units?
           format: float
+          nullable: true
         nominal_cell_weight:
           type: number
           description: in what units?
           format: float
+          nullable: true
     User:
       nullable: true
       required:
@@ -401,9 +408,11 @@ components:
           type: string
           format: email
           example: name@domain.com
+          nullable: true
         address:
           type: string
           format: address
+          nullable: true
           example: "Department of Computer Science, University of Oxford, 15 Parks\
             \ Rd, Oxford OX1 3QD, United Kingdom"
     Equipment:
@@ -421,6 +430,7 @@ components:
           example: My Name Here
         description:
           type: string
+          nullable: true
           example: Biologic MPG205z
     Column:
       required:

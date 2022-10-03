@@ -87,13 +87,13 @@ class Cell(ModelNormal):
         return {
             'id': (int,),  # noqa: E501
             'name': (str,),  # noqa: E501
-            'manufacturer': (str,),  # noqa: E501
-            'form_factor': (str,),  # noqa: E501
-            'datasheet': (str,),  # noqa: E501
-            'anode_chemistry': (str,),  # noqa: E501
-            'cathode_chemistry': (str,),  # noqa: E501
-            'nominal_capacity': (float,),  # noqa: E501
-            'nominal_cell_weight': (float,),  # noqa: E501
+            'manufacturer': (str, none_type,),  # noqa: E501
+            'form_factor': (str, none_type,),  # noqa: E501
+            'datasheet': (str, none_type,),  # noqa: E501
+            'anode_chemistry': (str, none_type,),  # noqa: E501
+            'cathode_chemistry': (str, none_type,),  # noqa: E501
+            'nominal_capacity': (float, none_type,),  # noqa: E501
+            'nominal_cell_weight': (float, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -158,13 +158,13 @@ class Cell(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            manufacturer (str): [optional]  # noqa: E501
-            form_factor (str): [optional]  # noqa: E501
-            datasheet (str): [optional]  # noqa: E501
-            anode_chemistry (str): [optional]  # noqa: E501
-            cathode_chemistry (str): [optional]  # noqa: E501
-            nominal_capacity (float): in what units?. [optional]  # noqa: E501
-            nominal_cell_weight (float): in what units?. [optional]  # noqa: E501
+            manufacturer (str, none_type): [optional]  # noqa: E501
+            form_factor (str, none_type): [optional]  # noqa: E501
+            datasheet (str, none_type): [optional]  # noqa: E501
+            anode_chemistry (str, none_type): [optional]  # noqa: E501
+            cathode_chemistry (str, none_type): [optional]  # noqa: E501
+            nominal_capacity (float, none_type): in what units?. [optional]  # noqa: E501
+            nominal_cell_weight (float, none_type): in what units?. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -252,13 +252,13 @@ class Cell(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            manufacturer (str): [optional]  # noqa: E501
-            form_factor (str): [optional]  # noqa: E501
-            datasheet (str): [optional]  # noqa: E501
-            anode_chemistry (str): [optional]  # noqa: E501
-            cathode_chemistry (str): [optional]  # noqa: E501
-            nominal_capacity (float): in what units?. [optional]  # noqa: E501
-            nominal_cell_weight (float): in what units?. [optional]  # noqa: E501
+            manufacturer (str, none_type): [optional]  # noqa: E501
+            form_factor (str, none_type): [optional]  # noqa: E501
+            datasheet (str, none_type): [optional]  # noqa: E501
+            anode_chemistry (str, none_type): [optional]  # noqa: E501
+            cathode_chemistry (str, none_type): [optional]  # noqa: E501
+            nominal_capacity (float, none_type): in what units?. [optional]  # noqa: E501
+            nominal_cell_weight (float, none_type): in what units?. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
